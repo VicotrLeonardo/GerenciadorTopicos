@@ -15,12 +15,13 @@ import {
 
 interface Props extends RectButtonProps {
   data: TarefaDTO;
+  props: () => void;
 }
 
-export function TarefaCard({ data, ...rest }: Props) {
+export function TarefaCard({ data, props }: Props) {
   return (
     <>
-      <Content {...rest}>
+      <Content onPress={() => props}>
         <DivId>
           <TextId>{data.id}</TextId>
         </DivId>
