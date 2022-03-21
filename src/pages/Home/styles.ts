@@ -1,50 +1,61 @@
-import styled from "styled-components/native";
-import { RFValue } from "react-native-responsive-fontsize";
-import { RectButton } from "react-native-gesture-handler";
-import { ButtonProps, TarefaDTO, InputModalProps } from "../../dtos/TarefaDTO";
 import { FlatList, FlatListProps, TouchableOpacity } from "react-native";
+import { RFValue } from "react-native-responsive-fontsize";
+import styled from "styled-components/native";
+import { TopicoDTO } from "../../dtos/InterfacesDTO";
 
 export const Container = styled.View`
   flex: 1;
-  background-color: #121212;
-  align-items: center;
 `;
 
 export const Header = styled.View`
   display: flex;
-  margin-top: ${RFValue(30)}px;
-  height: ${RFValue(75)}px;
-  width: ${RFValue(317)}px;
+  height: ${RFValue(85)}px;
+  width: 100%;
+  background-color: #2d2c35;
+
+  align-items: center;
+  justify-content: center;
+
   border-bottom-width: 2px;
   border-bottom-color: #a004ff;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
 `;
-export const TextH1 = styled.Text`
-  color: #ad00ff;
+export const TextTitulo = styled.Text`
+  margin-top: ${RFValue(25)}px;
   font-weight: bold;
-  font-size: ${RFValue(24)}px;
+  color: #fffdfd;
+  font-size: ${RFValue(20)}px;
 `;
-export const DivAdicionar = styled.View`
+export const Main = styled.View`
   display: flex;
-
-  width: 100%;
-  align-items: flex-end;
-
-  margin-top: ${RFValue(10)}px;
-  margin-right: ${RFValue(10)}px;
-`;
-export const ButtonAdd = styled(TouchableOpacity)``;
-
-export const DivMain = styled.View`
   flex: 1;
   width: 100%;
-  margin-top: ${RFValue(10)}px;
-  align-items: center;
+  background-color: #2d2c35;
 `;
-export const TarefasList = styled(
-  FlatList as new (props: FlatListProps<TarefaDTO>) => FlatList<TarefaDTO>
+export const Footer = styled.View`
+  display: flex;
+  width: 100%;
+  height: ${RFValue(54)}px;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #2d2c35;
+  border-top-width: 2px;
+  border-top-color: #a004ff;
+`;
+export const ButtonForum = styled(TouchableOpacity)`
+  border: 2px solid;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #fff;
+`;
+export const TextButton = styled.Text`
+  font-weight: bold;
+  color: black;
+  font-size: ${RFValue(12)}px;
+`;
+
+export const TopicosList = styled(
+  FlatList as new (props: FlatListProps<TopicoDTO>) => FlatList<TopicoDTO>
 ).attrs({
   contentContainerStyle: {
     padding: 24,

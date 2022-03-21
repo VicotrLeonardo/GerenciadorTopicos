@@ -1,108 +1,73 @@
+import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
-import { Alert, Modal, StatusBar } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { GenerateUUID } from "react-native-uuid";
+import { TopicoCard } from "../../components/TopicoCard";
+import { TopicoDTO } from "../../dtos/InterfacesDTO";
+import { api } from "../../services/api";
 
 import {
   Container,
   Header,
-  TextH1,
-  DivAdicionar,
-  ButtonAdd,
-  DivMain,
-  TarefasList,
+  TextTitulo,
+  Main,
+  Footer,
+  ButtonForum,
+  TextButton,
+  TopicosList,
 } from "./styles";
-import { TarefaCard } from "../../components/TarefaCard";
-import { TarefaDTO } from "../../dtos/TarefaDTO";
-import { api } from "../../services/api";
-import { ModalAdicionar } from "../../components/ModalAdicionar";
-import { ModalAlterar } from "../../components/ModalAlterar";
 
 export function Home() {
-  const [tarefas, setTarefas] = useState<TarefaDTO[]>([]);
+  const [topicos, setTopicos] = useState<TopicoDTO[]>([]);
 
-  const [modalVisible, setModalVisible] = useState(false);
+  const navigation = useNavigation();
 
-  const [modalAlterarVisible, setModalAlterarVisible] = useState(false);
-
-  const [udpateList, setUpdateList] = useState(false);
-
-  //States do modal alterar
-  const [idAlterar, setIdAlterar] = useState("");
-  const [tituloAlterar, setTituloAlterar] = useState("");
-  const [descricaoAlterar, setDescricaoAlterar] = useState("");
-  //
   useEffect(() => {
-    async function getTarefas() {
-      try {
-        const response = await api.get("/tarefas");
-        setTarefas(response.data);
-      } catch (error) {
-        console.log(error);
+    navigation.addListener("focus", () => {
+      async function getTopicos() {
+        try {
+          const response = await api.get("/topicos");
+          setTopicos(response.data);
+        } catch (error) {
+          console.log(error);
+        }
       }
-    }
 
-    getTarefas();
-  }, [udpateList]);
+      getTopicos();
+    });
+  }, []);
 
   return (
-    <>
-      <Container>
-        <StatusBar
-          barStyle="light-content"
-          backgroundColor="transparent"
-          translucent
-        />
-        <Header>
-          <TextH1>TAREFAS</TextH1>
-        </Header>
-
-        <DivAdicionar>
-          <ButtonAdd
-            onPress={() => {
-              setModalVisible(true);
-            }}
-          >
-            <MaterialCommunityIcons
-              name="plus"
-              size={40}
-              style={{
-                color: "#A004FF",
-              }}
+    <Container>
+      <Header>
+        <TextTitulo>Últimas Postagens</TextTitulo>
+      </Header>
+      <Main>
+        <TopicosList
+          data={topicos}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <TopicoCard
+              id={item.id}
+              ds_topico={item.ds_topico}
+              ds_mensagem={item.ds_mensagem}
+              nm_usuario={item.nm_usuario}
+              onPress={() =>
+                navigation.navigate("TopicoPage", {
+                  id: item.id,
+                })
+              }
             />
-          </ButtonAdd>
-        </DivAdicionar>
-
-        <DivMain>
-          <TarefasList
-            data={tarefas}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => (
-              <TarefaCard
-                data={item}
-                props={() => {
-                  setModalAlterarVisible(true),
-                    setIdAlterar(item.id),
-                    setTituloAlterar(item.titulo),
-                    setDescricaoAlterar(item.descricao);
-                }}
-              />
-            )}
-          />
-        </DivMain>
-      </Container>
-      <ModalAdicionar
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
-        setUpdateList={setUpdateList}
-        udpateList={udpateList}
-      />
-      <ModalAlterar
-        modalVisible={modalAlterarVisible}
-        setModalVisible={setModalAlterarVisible}
-        id={idAlterar}
-        titulo={tituloAlterar}
-        descricao={descricaoAlterar}
-      />
-    </>
+          )}
+        />
+      </Main>
+      <Footer>
+        <ButtonForum onPress={() => navigation.navigate("Home")}>
+          <TextButton>FÓRUM</TextButton>
+        </ButtonForum>
+        <ButtonForum onPress={() => navigation.navigate("NovoTopico")}>
+          <TextButton>NOVO TÓPICO</TextButton>
+        </ButtonForum>
+      </Footer>
+    </Container>
   );
 }
