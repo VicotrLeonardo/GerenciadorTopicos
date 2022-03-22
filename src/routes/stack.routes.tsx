@@ -4,6 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { Home } from "../pages/Home";
 import { NovoTopico } from "../pages/NovoTopico";
 import { TopicoPage } from "../pages/TopicoPage";
+import { AlterarTopico } from "../pages/AlterarTopico";
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -13,6 +14,8 @@ export function StackRoutes() {
       <Screen name="Home" component={Home} />
       <Screen name="NovoTopico" component={NovoTopico} />
       <Screen name="TopicoPage" component={TopicoPage} />
+      <Screen name="AlterarTopico" component={AlterarTopico} />
     </Navigator>
   );
 }
+

@@ -78,10 +78,16 @@ export const DivNome = styled.View`
   height: ${RFValue(46)}px;
   margin-left: ${RFValue(5)}px;
 `;
-export const TextNome = styled.Text`
+
+export const TextTituloTopico = styled.Text`
   font-weight: bold;
   color: #fffdfd;
   font-size: ${RFValue(20)}px;
+`;
+
+export const TextNome = styled.Text`
+  color: #fffdfd;
+  font-size: ${RFValue(12)}px;
 `;
 export const DivMensagem = styled.View`
   display: flex;
@@ -116,7 +122,7 @@ export const Button = styled(TouchableOpacity)<ButtonProps>`
   justify-content: center;
 
   background-color: ${({ nome }) =>
-    nome === "EDITAR" ? "#70d096" : "#E99393"};
+    nome === "EDITAR" ? "#59F98F" : "#F05A5A"};
 `;
 
 export const Footer = styled.View`

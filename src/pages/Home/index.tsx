@@ -1,6 +1,8 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import { GenerateUUID } from "react-native-uuid";
+import { FontAwesome5 } from "@expo/vector-icons";
+
 import { TopicoCard } from "../../components/TopicoCard";
 import { TopicoDTO } from "../../dtos/InterfacesDTO";
 import { api } from "../../services/api";
@@ -15,6 +17,7 @@ import {
   TextButton,
   TopicosList,
 } from "./styles";
+import { Alert } from "react-native";
 
 export function Home() {
   const [topicos, setTopicos] = useState<TopicoDTO[]>([]);
@@ -27,8 +30,8 @@ export function Home() {
         try {
           const response = await api.get("/topicos");
           setTopicos(response.data);
-        } catch (error) {
-          console.log(error);
+        } catch (e) {
+          alert("Ocorreu um erro ao buscar os Topicos", e.message);
         }
       }
 
@@ -62,7 +65,7 @@ export function Home() {
       </Main>
       <Footer>
         <ButtonForum onPress={() => navigation.navigate("Home")}>
-          <TextButton>FÓRUM</TextButton>
+          <FontAwesome5 name="home" size={24} color="black" />
         </ButtonForum>
         <ButtonForum onPress={() => navigation.navigate("NovoTopico")}>
           <TextButton>NOVO TÓPICO</TextButton>

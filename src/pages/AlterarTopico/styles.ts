@@ -35,11 +35,9 @@ export const Footer = styled.View`
   display: flex;
   width: 100%;
   height: ${RFValue(54)}px;
-
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-
   background-color: #2d2c35;
   border-top-width: 2px;
   border-top-color: #a004ff;

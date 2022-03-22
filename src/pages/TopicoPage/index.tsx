@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Feather } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
 import {
   Container,
   Header,
@@ -17,23 +18,47 @@ import {
   ButtonForum,
   TextButton,
   DivButton,
+  TextTituloTopico,
 } from "./styles";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { TopicoDTO } from "../../dtos/InterfacesDTO";
+import { api } from "../../services/api";
+import { ModalExcluir } from "../../components/ModalExcluir";
 
-interface Props extends TopicoDTO {}
+interface Params {
+  id: TopicoDTO["id"];
+}
 
 export function TopicoPage() {
   const navigation = useNavigation();
-  const { params } = useRoute();
-  const id = params?.id;
+  const routes = useRoute();
 
-  useEffect(() => {}, []);
+  const { id } = routes.params as Params;
+
+  console.log("project id : ", id);
+
+  const [topico, setTopico] = useState<TopicoDTO>();
+  const [modalVisible, setModalVisible] = useState(false);
+
+  useEffect(() => {
+    async function getTopico() {
+      try {
+        const response = await api.get(`/topicos/${id}`);
+        setTopico(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    getTopico();
+  }, []);
+
+  console.log("O topico é : ", topico);
 
   return (
     <Container>
       <Header>
-        <TextTitulo>Topico 1 teste</TextTitulo>
+        <TextTitulo>{`Topico: ${topico?.ds_topico}`}</TextTitulo>
       </Header>
       <Main>
         <Content>
@@ -43,22 +68,19 @@ export function TopicoPage() {
             </IconDiv>
 
             <DivNome>
-              <TextNome>Victor</TextNome>
+              <TextTituloTopico>{topico?.ds_topico}</TextTituloTopico>
+              <TextNome>{topico?.nm_usuario}</TextNome>
             </DivNome>
           </DivHeader>
 
           <DivMensagem>
-            <TextMensagem>Mensagem</TextMensagem>
+            <TextMensagem>{topico?.ds_mensagem}</TextMensagem>
           </DivMensagem>
         </Content>
         <DivButton>
           <Button
             onPress={() => {
-              try {
-                console.log("Passou aqui Submit");
-              } catch (error) {
-                console.log("Codigo do erro foi: ", error);
-              }
+              setModalVisible(true);
             }}
             nome="REMOVER"
           >
@@ -68,7 +90,9 @@ export function TopicoPage() {
           <Button
             onPress={() => {
               try {
-                console.log("Passou aqui Submit");
+                navigation.navigate("AlterarTopico", { id });
+
+                console.log("Passou aqui EDITAR");
               } catch (error) {
                 console.log("Codigo do erro foi: ", error);
               }
@@ -82,12 +106,18 @@ export function TopicoPage() {
 
       <Footer>
         <ButtonForum onPress={() => navigation.navigate("Home")}>
-          <TextButton>FÓRUM</TextButton>
+          <FontAwesome5 name="home" size={24} color="black" />
         </ButtonForum>
-        <ButtonForum>
+        <ButtonForum onPress={() => navigation.navigate("NovoTopico")}>
           <TextButton>NOVO TÓPICO</TextButton>
         </ButtonForum>
       </Footer>
+
+      <ModalExcluir
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        id={topico?.id}
+      />
     </Container>
   );
 }
