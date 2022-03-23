@@ -90,7 +90,7 @@ export function TopicoPage() {
           <Button
             onPress={() => {
               try {
-                navigation.navigate("AlterarTopico", { id });
+                navigation.navigate("AlterarTopico", { topico });
 
                 console.log("Passou aqui EDITAR");
               } catch (error) {

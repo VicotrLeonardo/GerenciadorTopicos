@@ -32,7 +32,9 @@ interface Params {
   ds_mensagem: TopicoDTO["ds_mensagem"];
 }
 
-interface FormData extends TopicoDTO {}
+interface FormData extends TopicoDTO {
+  topico: TopicoDTO;
+}
 
 const schema = Yup.object().shape({
   ds_topico: Yup.string().required("O Título é obrigatório"),
@@ -44,6 +46,10 @@ export function AlterarTopico() {
 
   const routes = useRoute();
 
+  // const [topico, setTopico] = useState<any>(Object);
+
+  const { topico } = routes.params as FormData;
+
   const {
     control,
     handleSubmit,
@@ -51,27 +57,24 @@ export function AlterarTopico() {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
+    defaultValues: topico,
   });
 
-  const [topico, setTopico] = useState<TopicoDTO>({} as TopicoDTO);
+  console.log("parametro id aqui ", topico.id);
 
-  const { id } = routes.params as Params;
-
-  console.log("parametro id aqui ", id);
-
-  useEffect(() => {
-    async function getTopico() {
-      await api
-        .get(`/topicos/${id}`)
-        .then((response) => {
-          setTopico(response.data);
-        })
-        .catch((error) => {
-          alert("Ocorreu um erro ao buscar o Topico: " + error.message);
-        });
-    }
-    getTopico();
-  }, []);
+  // useEffect(() => {
+  //   async function getTopico() {
+  //     await api
+  //       .get(`/topicos/${id}`)
+  //       .then((response) => {
+  //         setTopico(response.data);
+  //       })
+  //       .catch((error) => {
+  //         alert("Ocorreu um erro ao buscar o Topico: " + error.message);
+  //       });
+  //   }
+  //   getTopico();
+  // }, []);
 
   // console.log("topico titulo  aqui: ", titulo);
 
@@ -114,6 +117,7 @@ export function AlterarTopico() {
                   <InputText
                     onChangeText={onChange}
                     placeholder={topico.ds_topico}
+                    defaultValue={value && value.toString()}
                   />
                 )}
               />
@@ -125,10 +129,11 @@ export function AlterarTopico() {
               <Controller
                 control={control}
                 name="ds_mensagem"
-                render={({ field: { onChange } }) => (
+                render={({ field: { onChange, value } }) => (
                   <InputTextM
-                    placeholder={topico.ds_mensagem}
                     onChangeText={onChange}
+                    placeholder={topico.ds_mensagem}
+                    defaultValue={value && value.toString()}
                   />
                 )}
               />

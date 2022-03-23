@@ -31,7 +31,7 @@ interface FormData extends TopicoDTO {}
 
 const schema = Yup.object().shape({
   ds_topico: Yup.string().required("O Título é obrigatório"),
-  ds_mensagem: Yup.string().required("A descrição é obrigatório"),
+  ds_mensagem: Yup.string().required("A mensagem é obrigatória"),
 });
 
 export function NovoTopico() {
