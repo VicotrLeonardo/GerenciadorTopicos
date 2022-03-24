@@ -1,6 +1,7 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
 
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -147,10 +148,10 @@ export function AlterarTopico() {
 
         <Footer>
           <ButtonForum onPress={() => navigation.navigate("Home")}>
-            <FontAwesome5 name="home" size={24} color="black" />
+            <FontAwesome5 name="home" size={30} color="white" />
           </ButtonForum>
           <ButtonForum onPress={() => navigation.navigate("NovoTopico")}>
-            <TextButton>NOVO TÓPICO</TextButton>
+            <Entypo name="plus" size={30} color="white" />
           </ButtonForum>
         </Footer>
       </Container>

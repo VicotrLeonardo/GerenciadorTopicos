@@ -33,7 +33,7 @@ export function TopicoCard({
           <TextHeader>{ds_topico}</TextHeader>
         </Header>
         <Footer>
-          <TextFooter>{ds_mensagem}</TextFooter>
+          <TextFooter>{ds_mensagem.substring(0, 10)}...</TextFooter>
         </Footer>
       </Content>
     </Container>

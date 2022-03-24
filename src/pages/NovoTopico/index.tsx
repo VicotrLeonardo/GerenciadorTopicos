@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import uuid from "react-native-uuid";
 import { api } from "../../services/api";
 import { FontAwesome5 } from "@expo/vector-icons";
-
+import { Entypo } from "@expo/vector-icons";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Controller, useForm } from "react-hook-form";
@@ -56,13 +56,14 @@ export function NovoTopico() {
       ds_mensagem: form.ds_mensagem,
       nm_usuario: "Victor Leonardo",
     };
-    console.log("passou aqui novo topico", novoTopico);
+    // console.log("passou aqui novo topico", novoTopico);
     try {
       await api
         .post("/topicos", novoTopico)
         .then(() => navigation.navigate("Home"));
       reset();
     } catch (error) {
+      alert("Ocorreu um erro ao adicionar o Topico", error.message);
       console.log(`Erro da função Submit : ${error}`);
     }
   }
@@ -113,10 +114,10 @@ export function NovoTopico() {
 
         <Footer>
           <ButtonForum onPress={() => navigation.navigate("Home")}>
-            <FontAwesome5 name="home" size={24} color="black" />
+            <FontAwesome5 name="home" size={30} color="white" />
           </ButtonForum>
-          <ButtonForum>
-            <TextButton>NOVO TÓPICO</TextButton>
+          <ButtonForum onPress={() => navigation.navigate("NovoTopico")}>
+            <Entypo name="plus" size={30} color="white" />
           </ButtonForum>
         </Footer>
       </Container>

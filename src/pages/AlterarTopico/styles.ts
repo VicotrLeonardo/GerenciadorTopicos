@@ -43,10 +43,8 @@ export const Footer = styled.View`
   border-top-color: #a004ff;
 `;
 export const ButtonForum = styled(TouchableOpacity)`
-  border: 2px solid;
   padding: 10px;
   border-radius: 10px;
-  background-color: #fff;
 `;
 export const TextButton = styled.Text`
   font-weight: bold;

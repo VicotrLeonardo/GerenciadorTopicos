@@ -1,8 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
-import { GenerateUUID } from "react-native-uuid";
 import { FontAwesome5 } from "@expo/vector-icons";
-
+import { Entypo } from "@expo/vector-icons";
 import { TopicoCard } from "../../components/TopicoCard";
 import { TopicoDTO } from "../../dtos/InterfacesDTO";
 import { api } from "../../services/api";
@@ -65,10 +64,10 @@ export function Home() {
       </Main>
       <Footer>
         <ButtonForum onPress={() => navigation.navigate("Home")}>
-          <FontAwesome5 name="home" size={24} color="black" />
+          <FontAwesome5 name="home" size={30} color="white" />
         </ButtonForum>
         <ButtonForum onPress={() => navigation.navigate("NovoTopico")}>
-          <TextButton>NOVO TÓPICO</TextButton>
+          <Entypo name="plus" size={30} color="white" />
         </ButtonForum>
       </Footer>
     </Container>

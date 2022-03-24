@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Feather } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
 import {
   Container,
   Header,
@@ -46,7 +47,7 @@ export function TopicoPage() {
         const response = await api.get(`/topicos/${id}`);
         setTopico(response.data);
       } catch (error) {
-        console.log(error);
+        alert("Ocorreu um erro ao buscar o Topico", error.message);
       }
     }
 
@@ -106,10 +107,10 @@ export function TopicoPage() {
 
       <Footer>
         <ButtonForum onPress={() => navigation.navigate("Home")}>
-          <FontAwesome5 name="home" size={24} color="black" />
+          <FontAwesome5 name="home" size={30} color="white" />
         </ButtonForum>
         <ButtonForum onPress={() => navigation.navigate("NovoTopico")}>
-          <TextButton>NOVO TÓPICO</TextButton>
+          <Entypo name="plus" size={30} color="white" />
         </ButtonForum>
       </Footer>
 

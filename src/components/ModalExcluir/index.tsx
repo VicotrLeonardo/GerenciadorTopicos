@@ -32,7 +32,7 @@ export function ModalExcluir({ modalVisible, setModalVisible, id }: Props) {
 
   async function deleteTopico() {
     await api
-      .delete(`http:///172.18.0.110:3000/topicos/${id}`)
+      .delete(`/topicos/${id}`)
       .then(() => navigation.navigate("Home"))
       .catch((error) => {
         alert("Ocorreu um erro ao Excluir o Topico: " + error.message);
